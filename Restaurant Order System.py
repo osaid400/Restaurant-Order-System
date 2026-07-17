@@ -20,9 +20,11 @@ def load_menu():
     else:
         return []
 
-def save_menu():
+def save_menu(menu_data=None):
+    if menu_data is None:
+        menu_data = menu
     with open("menu.json", "w") as file:
-        json.dump(menu, file, indent=5)
+        json.dump(menu_data, file, indent=5)
 
 menu = load_menu()
 
@@ -54,7 +56,7 @@ if not menu:
         {"Item ID":124,"Name":"Seekh Kebab","Category":"BBQ","Price":450,"Stock":20},
         {"Item ID":125,"Name":"Falooda","Category":"Dessert","Price":320,"Stock":15}
     ]
-    save_menu()
+    save_menu(menu)
 
 # ---------------- FILE HANDLING ----------------
 def load_order():
@@ -65,17 +67,36 @@ def load_order():
     else:
         return []
 
-order = load_order()
 
-def save_order():
+def load_order_history():
+    if os.path.exists("order_history.json"):
+        with open("order_history.json", "r") as file:
+            data = json.load(file)
+        return data
+    else:
+        return []
+
+
+order = load_order()
+order_history = load_order_history()
+
+
+def save_order(order_data=None):
+    if order_data is None:
+        order_data = order
     with open("order.json", "w") as file:
-        json.dump(order, file, indent=5)
+        json.dump(order_data, file, indent=5)
 
-order = load_order()
+
+def save_order_history(order_history_data=None):
+    if order_history_data is None:
+        order_history_data = order_history
+    with open("order_history.json", "w") as file:
+        json.dump(order_history_data, file, indent=5)
+
+
 if not order:
-    order = [
-
-    ]
+    order = []
     save_order()
 
 # ------------------- FUNCTIONS -----------------
@@ -345,12 +366,30 @@ def calculate_bill():
     for index, item in enumerate(order, start=1):
         subtotal = item["Price"] * item["Quantity"]
         grand_total += subtotal
-        print("{:<4} {:<17} x{:<3} {:>12}".format(f"{index:02d}.", item["Name"], item["Quantity"], format_currency(subtotal)))
+        print("{:<4} {:<17} {:>3} × {:>2} = {:>12}".format(
+            f"{index:02d}.",
+            item["Name"][:17],
+            format_currency(item["Price"]),
+            item["Quantity"],
+            format_currency(subtotal),
+        ))
 
     print("-----------------------------------------------------")
     print("{:<25} {:>12}".format("Grand Total", format_currency(grand_total)))
     print("=====================================================")
     return grand_total
+
+def get_next_receipt_number():
+    receipt_files = [name for name in os.listdir(".") if name.startswith("receipt_") and name.endswith(".txt")]
+    receipt_numbers = []
+    for filename in receipt_files:
+        try:
+            receipt_numbers.append(int(filename[len("receipt_"):-4]))
+        except ValueError:
+            continue
+    if receipt_numbers:
+        return max(receipt_numbers) + 1
+    return 1001
 
 def checkout():
     if not order:
@@ -367,31 +406,64 @@ def checkout():
         print("Checkout cancelled.")
         return
 
+    now = datetime.now()
+    receipt_number = get_next_receipt_number()
+    receipt_file = f"receipt_{receipt_number}.txt"
+
     lines = []
     lines.append("="*60)
     lines.append("{:^60}".format("Food Order - RECEIPT"))
     lines.append("="*60)
+    lines.append(f"Receipt No: {receipt_number}")
     lines.append(f"Customer: {name}")
     if phone:
         lines.append(f"Phone   : {phone}")
-    lines.append(f"Date and Time   : {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    lines.append(f"Date and Time   : {now.strftime('%Y-%m-%d %H:%M:%S')}")
     lines.append("-"*60)
-    lines.append("{:<6} {:<20} {:>7} {:>12}".format("ID","Name","Qty","Subtotal"))
+    lines.append("{:<6} {:<20} {:>7} {:>12}".format("ID", "Name", "Qty", "Subtotal"))
     lines.append("-"*60)
 
     for item in order:
         subtotal = item["Price"] * item["Quantity"]
-        lines.append("{:<6} {:<20} {:>6} {:>12}".format(item["Item ID"], item["Name"][:25], item["Quantity"], format_currency(subtotal)))
+        lines.append("{:<6} {:<20} {:>6} {:>12}".format(
+            item["Item ID"],
+            item["Name"][:25],
+            item["Quantity"],
+            format_currency(subtotal),
+        ))
+        lines.append(f"   {item['Name'][:25]} {format_currency(item['Price'])} × {item['Quantity']} = {format_currency(subtotal)}")
 
-    
     lines.append("-"*60)
     lines.append(f"{'Grand Total:':>26} {format_currency(grand_total)}")
     lines.append("="*60)
 
     bill_text = "\n".join(lines)
 
+    with open(receipt_file, "w", encoding="utf-8") as file:
+        file.write(bill_text)
+
     print(f"\n{bill_text}\n")
-    print("Receipt printed!")
+    print(f"Receipt saved to {receipt_file}")
+
+    order_history.append({
+        "Receipt No": receipt_number,
+        "Customer Name": name,
+        "Phone": phone,
+        "Date": now.strftime("%Y-%m-%d"),
+        "Time": now.strftime("%H:%M:%S"),
+        "Items": [
+            {
+                "Item ID": item["Item ID"],
+                "Name": item["Name"],
+                "Price": item["Price"],
+                "Quantity": item["Quantity"],
+                "Subtotal": item["Price"] * item["Quantity"],
+            }
+            for item in order
+        ],
+        "Grand Total": grand_total,
+    })
+    save_order_history()
 
     order.clear()
     save_order()
