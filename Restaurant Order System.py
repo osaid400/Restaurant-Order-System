@@ -380,7 +380,10 @@ def calculate_bill():
     return grand_total
 
 def get_next_receipt_number():
-    receipt_files = [name for name in os.listdir(".") if name.startswith("receipt_") and name.endswith(".txt")]
+    if not os.path.exists("customer_receipts"):
+        os.makedirs("customer_receipts")
+    
+    receipt_files = [name for name in os.listdir("customer_receipts") if name.startswith("receipt_") and name.endswith(".txt")]
     receipt_numbers = []
     for filename in receipt_files:
         try:
@@ -408,7 +411,7 @@ def checkout():
 
     now = datetime.now()
     receipt_number = get_next_receipt_number()
-    receipt_file = f"receipt_{receipt_number}.txt"
+    receipt_file = os.path.join("customer_receipts", f"receipt_{receipt_number}.txt")
 
     lines = []
     lines.append("="*60)
@@ -439,6 +442,10 @@ def checkout():
 
     bill_text = "\n".join(lines)
 
+    # Ensure folder exists before saving
+    if not os.path.exists("customer_receipts"):
+        os.makedirs("customer_receipts")
+    
     with open(receipt_file, "w", encoding="utf-8") as file:
         file.write(bill_text)
 
@@ -473,7 +480,7 @@ def checkout():
 def exit_system():
     print("Thank you for ordering with us!")
     print("Good Bye! Have a nice day!")
-    print("Exiting the Resturant Order System...")
+    print("Exiting the Restaurant Order System...")
     input("Press Enter to close window!")
     sys.exit()
 

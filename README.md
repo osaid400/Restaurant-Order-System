@@ -1,59 +1,46 @@
 # Restaurant Order System
 
-A simple console-based **Restaurant Order System** built with Python. This project demonstrates the use of functions, lists, dictionaries, loops, searching, and input validation to simulate a restaurant ordering system.
-
----
+A console-based Restaurant Order System built with Python. This project demonstrates menu management, food ordering, stock management, JSON file handling, receipt generation, and order history.
 
 ## Features
 
-* View restaurant menu grouped by category
-* Search food items by:
-  * Item ID
-  * Item Name
-  * Category
-* Place food orders
-* Update order quantity
-* Remove items from an order
-* Calculate total bill
-* Checkout with receipt generation
-* Automatic stock management
-* Input validation for all user entries
+* View Restaurant Menu
+* Search Food Item
 
----
+  * By Item ID
+  * By Name
+  * By Category
+* Place Food Order
+* View Current Order
+* Update Order Quantity
+* Remove Item From Order
+* Calculate Bill
+* Checkout System
+* Receipt Generation (.txt)
+* Auto Receipt Number
+* Order History
+* Menu & Order Persistence using JSON
+* Stock Management
+* Input Validation
+* Exception Handling
 
 ## Technologies Used
 
 * Python 3
-
----
-
-## Concepts Covered
-
-* Functions
-* Lists
-* Dictionaries
-* Loops
-* Conditional Statements
-* User Input Validation
-* Searching
-* Sorting (`sorted()`)
-* List Comprehensions
-* `next()` Function
-* String Formatting
-* Console-Based Application Design
-
----
+* JSON
+* Datetime Module
+* OS Module
 
 ## Project Structure
 
 ```text
 Restaurant-Order-System/
 │
-├── Restaurant Order System.py
+├── restaurant_order_system.py
+├── .gitignore
+├── /customer_receipts
 └── README.md
 ```
-
----
 
 ## How to Run
 
@@ -69,45 +56,44 @@ git clone https://github.com/osaid400/Restaurant-Order-System.git
 cd Restaurant-Order-System
 ```
 
-3. Run the application
+3. Run
 
 ```bash
-python "Restaurant Order System.py"
+python restaurant_order_system.py
 ```
 
 ---
 
-# Example Output
-
-## Main Menu
-
-```text
-============ Welcome to Restaurant Order System ============
-
-=============== Select the Option (0-8) ===============
-1. View Menu
-2. Search Food Item
-3. Place Order
-4. View Current Order
-5. Update Order
-6. Remove Item from Order
-7. Calculate Bill
-8. Checkout
-0. Exit
-========================================================
-```
-
----
+# Example Outputs
 
 ## View Menu
 
 ```text
 ===================== BURGER =====================
 
-ID     Name                     Price        Stock
+ID     Name                    Price     Stock
+------------------------------------------------
+101    Zinger Burger           Rs. 650      20
+102    Beef Burger             Rs. 750      18
+```
+
+---
+
+## Search Item
+
+```text
+Search by:
+1. Item ID
+2. Name
+3. Category
+
+Enter your choice: 2
+Enter item name: pizza
+
+ID     Name              Category     Price     Stock
 ------------------------------------------------------
-101    Zinger Burger            Rs. 650      20
-102    Beef Burger              Rs. 750      18
+105    Small Pizza       Pizza      Rs. 1200      10
+106    Large Pizza       Pizza      Rs. 2200       8
 ```
 
 ---
@@ -115,17 +101,17 @@ ID     Name                     Price        Stock
 ## Place Order
 
 ```text
-Enter the Item ID: 101
+Enter Item ID: 105
 
 Selected Item:
-Name : Zinger Burger
-Price : Rs. 650
-Available Stock : 20
+Name : Small Pizza
+Price : Rs. 1200
+Available Stock : 10
 
-Enter the quantity: 2
+Enter Quantity: 2
 
-2 x Zinger Burger added successfully.
-Remaining Stock: 18
+2 x Small Pizza added successfully.
+Remaining Stock: 8
 ```
 
 ---
@@ -133,24 +119,49 @@ Remaining Stock: 18
 ## Current Order
 
 ```text
-ID     Name                 Price      Quantity      Total
+ID     Name                  Price      Quantity        Total
 --------------------------------------------------------------
-101    Zinger Burger        Rs. 650          2     Rs. 1300
---------------------------------------------------------------
+105    Small Pizza         Rs.1200          2       Rs.2400
 ```
 
 ---
 
-## Bill
+## Update Order
+
+```text
+Current Quantity: 2
+
+Enter New Quantity: 3
+
+Order updated successfully!
+```
+
+---
+
+## Remove Item
+
+```text
+Removing:
+Small Pizza x 3
+
+Are you sure? (y/n): y
+
+Item removed successfully.
+```
+
+---
+
+## Calculate Bill
 
 ```text
 ====================== BILL ======================
 
-01. Zinger Burger      x2      Rs. 1300
+01. Small Pizza Rs.1200 × 2 = Rs.2400
+02. Cold Drink  Rs.120 × 2  = Rs.240
 
--------------------------------------------------
-Grand Total             Rs. 1300
-=================================================
+--------------------------------------------------
+Grand Total                 Rs.2640
+==================================================
 ```
 
 ---
@@ -158,51 +169,70 @@ Grand Total             Rs. 1300
 ## Checkout
 
 ```text
-Proceed to Checkout? (Y/N): y
+Customer Name: Abdullah
+Phone: 03001234567
 
-========= RECEIPT =========
+Proceed? (y/n): y
 
-01. Zinger Burger      x2      Rs. 1300
+Receipt saved to receipt_1001.txt
 
-------------------
-Grand Total
-Rs. 1300
-
-Thank you!
-============================
+Thank you for ordering with us!
 ```
 
 ---
 
+## Receipt Example
+
+```text
+Receipt No: 1001
+
+Customer: Abdullah
+
+Small Pizza Rs.1200 × 2 = Rs.2400
+Cold Drink  Rs.120 × 2 = Rs.240
+
+Grand Total:
+Rs.2640
+```
+
+## Concepts Covered
+
+* Functions
+* Lists
+* Dictionaries
+* JSON File Handling
+* CRUD Operations
+* Searching
+* Input Validation
+* Exception Handling
+* Datetime Module
+* OS Module
+* Menu Driven Programming
+* Stock Management
+* Receipt Generation
+
 ## Future Improvements
 
-* Store orders using file handling
-* Save customer information
-* Generate invoice numbers
-* Apply discounts and coupons
-* Add GST/Tax calculation
-* Add multiple payment methods
-* Store order history
-* Admin panel for menu management
-* Database integration (SQLite/MySQL)
-* Graphical User Interface (Tkinter/PyQt)
-
----
+* Customer Login System
+* Admin Panel
+* Discount Coupons
+* Table Reservations
+* SQLite Database
+* GUI Version (Tkinter)
+* Order Analytics Dashboard
 
 ## Learning Outcomes
 
 This project helped me practice:
 
-* Designing menu-driven applications
-* Managing inventory using dictionaries
-* Working with lists of records
-* Searching and sorting data
-* Updating and deleting records
-* Handling user input safely
-* Writing modular code using functions
-* Building a complete CRUD-style console application
-
----
+* Working with JSON files
+* Persistent data storage
+* CRUD operations
+* Inventory management
+* Receipt generation
+* Order history management
+* Modular programming
+* Problem-solving
 
 ## Author
 
