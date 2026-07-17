@@ -83,12 +83,6 @@ if not order:
 def format_currency(amount):
     return f"Rs. {amount}"
 
-def print_menu(menu_item):
-    print(f"{menu_item['Item ID']:<17} {menu_item['Name']:<25} {menu_item['Category']:<25} {format_currency(menu_item['Price']):<30} {menu_item['Stock']:<10}")
-
-def print_order(order_item):
-    print(f"{order_item['Item ID']:<17} {order_item['Name']:<25} {order_item['Category']:<25} {format_currency(order_item['Price']):<30} {order_item['Quantity']:<10} {order_item['Total']:<10}")
-
 def view_menu():
     if len(menu) == 0:
         print("No Items in stock!")
@@ -239,7 +233,8 @@ def place_order():
             "Price": item["Price"],
             "Quantity": quantity,
         })
-
+    save_order()
+    save_menu()
     print(f"{quantity} x {item['Name']} added successfully. Remaining Stock: {item['Stock']}")
 
 def view_current_order():
@@ -305,6 +300,8 @@ def update_order():
         menu_item["Stock"] += abs(quantity_diff)
 
     order_item["Quantity"] = new_quantity
+    save_menu()
+    save_order()
     print("Order updated successfully!")
 
 def remove_item_from_order():
@@ -334,6 +331,8 @@ def remove_item_from_order():
         menu_item["Stock"] += order_item["Quantity"]
 
     order.remove(order_item)
+    save_order()
+    save_menu()
     print("Item removed from order successfully.")
 
 def calculate_bill():
