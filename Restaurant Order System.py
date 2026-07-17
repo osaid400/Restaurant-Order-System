@@ -3,44 +3,91 @@
 # Language: Python
 # Level: Beginner
 
+from datetime import datetime
 import sys
+import os
+import json
 
 print ("============ Welcome to Restaurant Order System =============")
 
 # ---------------- RESTAURANT ORDER SYSTEM ----------------  
-menu = [
-{"Item ID":101,"Name":"Zinger Burger","Category":"Burger","Price":650,"Stock":20},
-{"Item ID":102,"Name":"Beef Burger","Category":"Burger","Price":750,"Stock":18},
-{"Item ID":103,"Name":"Chicken Shawarma","Category":"Wrap","Price":450,"Stock":25},
-{"Item ID":104,"Name":"Pizza Slice","Category":"Pizza","Price":300,"Stock":30},
-{"Item ID":105,"Name":"Small Pizza","Category":"Pizza","Price":1200,"Stock":10},
-{"Item ID":106,"Name":"Large Pizza","Category":"Pizza","Price":2200,"Stock":8},
-{"Item ID":107,"Name":"Chicken Biryani","Category":"Rice","Price":400,"Stock":25},
-{"Item ID":108,"Name":"Beef Biryani","Category":"Rice","Price":500,"Stock":18},
-{"Item ID":109,"Name":"Chicken Karahi","Category":"Desi","Price":1800,"Stock":10},
-{"Item ID":110,"Name":"Beef Karahi","Category":"Desi","Price":2200,"Stock":8},
-{"Item ID":111,"Name":"French Fries","Category":"Sides","Price":250,"Stock":40},
-{"Item ID":112,"Name":"Chicken Nuggets","Category":"Sides","Price":550,"Stock":25},
-{"Item ID":113,"Name":"Cold Drink","Category":"Beverage","Price":120,"Stock":60},
-{"Item ID":114,"Name":"Mineral Water","Category":"Beverage","Price":80,"Stock":70},
-{"Item ID":115,"Name":"Coffee","Category":"Hot Drink","Price":250,"Stock":25},
-{"Item ID":116,"Name":"Tea","Category":"Hot Drink","Price":120,"Stock":35},
-{"Item ID":117,"Name":"Ice Cream","Category":"Dessert","Price":300,"Stock":20},
-{"Item ID":118,"Name":"Chocolate Cake","Category":"Dessert","Price":350,"Stock":15},
-{"Item ID":119,"Name":"Pasta","Category":"Italian","Price":850,"Stock":15},
-{"Item ID":120,"Name":"Lasagna","Category":"Italian","Price":950,"Stock":10},
-{"Item ID":121,"Name":"Club Sandwich","Category":"Sandwich","Price":550,"Stock":18},
-{"Item ID":122,"Name":"Chicken Roll","Category":"Roll","Price":280,"Stock":30},
-{"Item ID":123,"Name":"Chicken Tikka","Category":"BBQ","Price":550,"Stock":20},
-{"Item ID":124,"Name":"Seekh Kebab","Category":"BBQ","Price":450,"Stock":20},
-{"Item ID":125,"Name":"Falooda","Category":"Dessert","Price":320,"Stock":15}
-]
 
-order = []
+def load_menu():
+    if os.path.exists("menu.json"):
+        with open("menu.json", "r") as file:
+            data = json.load(file)
+        return data
+    else:
+        return []
+
+def save_menu():
+    with open("menu.json", "w") as file:
+        json.dump(menu, file, indent=5)
+
+menu = load_menu()
+
+if not menu:
+    menu = [
+        {"Item ID":101,"Name":"Zinger Burger","Category":"Burger","Price":650,"Stock":20},
+        {"Item ID":102,"Name":"Beef Burger","Category":"Burger","Price":750,"Stock":18},
+        {"Item ID":103,"Name":"Chicken Shawarma","Category":"Wrap","Price":450,"Stock":25},
+        {"Item ID":104,"Name":"Pizza Slice","Category":"Pizza","Price":300,"Stock":30},
+        {"Item ID":105,"Name":"Small Pizza","Category":"Pizza","Price":1200,"Stock":10},
+        {"Item ID":106,"Name":"Large Pizza","Category":"Pizza","Price":2200,"Stock":8},
+        {"Item ID":107,"Name":"Chicken Biryani","Category":"Rice","Price":400,"Stock":25},
+        {"Item ID":108,"Name":"Beef Biryani","Category":"Rice","Price":500,"Stock":18},
+        {"Item ID":109,"Name":"Chicken Karahi","Category":"Desi","Price":1800,"Stock":10},
+        {"Item ID":110,"Name":"Beef Karahi","Category":"Desi","Price":2200,"Stock":8},
+        {"Item ID":111,"Name":"French Fries","Category":"Sides","Price":250,"Stock":40},
+        {"Item ID":112,"Name":"Chicken Nuggets","Category":"Sides","Price":550,"Stock":25},
+        {"Item ID":113,"Name":"Cold Drink","Category":"Beverage","Price":120,"Stock":60},
+        {"Item ID":114,"Name":"Mineral Water","Category":"Beverage","Price":80,"Stock":70},
+        {"Item ID":115,"Name":"Coffee","Category":"Hot Drink","Price":250,"Stock":25},
+        {"Item ID":116,"Name":"Tea","Category":"Hot Drink","Price":120,"Stock":35},
+        {"Item ID":117,"Name":"Ice Cream","Category":"Dessert","Price":300,"Stock":20},
+        {"Item ID":118,"Name":"Chocolate Cake","Category":"Dessert","Price":350,"Stock":15},
+        {"Item ID":119,"Name":"Pasta","Category":"Italian","Price":850,"Stock":15},
+        {"Item ID":120,"Name":"Lasagna","Category":"Italian","Price":950,"Stock":10},
+        {"Item ID":121,"Name":"Club Sandwich","Category":"Sandwich","Price":550,"Stock":18},
+        {"Item ID":122,"Name":"Chicken Roll","Category":"Roll","Price":280,"Stock":30},
+        {"Item ID":123,"Name":"Chicken Tikka","Category":"BBQ","Price":550,"Stock":20},
+        {"Item ID":124,"Name":"Seekh Kebab","Category":"BBQ","Price":450,"Stock":20},
+        {"Item ID":125,"Name":"Falooda","Category":"Dessert","Price":320,"Stock":15}
+    ]
+    save_menu()
+
+# ---------------- FILE HANDLING ----------------
+def load_order():
+    if os.path.exists("order.json"):
+        with open("order.json", "r") as file:
+            data = json.load(file)
+        return data
+    else:
+        return []
+
+order = load_order()
+
+def save_order():
+    with open("order.json", "w") as file:
+        json.dump(order, file, indent=5)
+
+order = load_order()
+if not order:
+    order = [
+
+    ]
+    save_order()
+
+# ------------------- FUNCTIONS -----------------
 
 def format_currency(amount):
     return f"Rs. {amount}"
 
+def print_menu(menu_item):
+    print(f"{menu_item['Item ID']:<17} {menu_item['Name']:<25} {menu_item['Category']:<25} {format_currency(menu_item['Price']):<30} {menu_item['Stock']:<10}")
+
+def print_order(order_item):
+    print(f"{order_item['Item ID']:<17} {order_item['Name']:<25} {order_item['Category']:<25} {format_currency(order_item['Price']):<30} {order_item['Quantity']:<10} {order_item['Total']:<10}")
 
 def view_menu():
     if len(menu) == 0:
@@ -65,7 +112,6 @@ def view_menu():
             format_currency(item["Price"]),
             item["Stock"],
         ))
-
 
 def search_food_item():
     print("Search by:\n1. Item ID\n2. Name\n3. Category")
@@ -144,7 +190,6 @@ def search_food_item():
 
     print("Invalid search choice. Please select 1, 2, or 3.")
 
-
 def place_order():
     global order
 
@@ -197,25 +242,24 @@ def place_order():
 
     print(f"{quantity} x {item['Name']} added successfully. Remaining Stock: {item['Stock']}")
 
-
 def view_current_order():
     if not order:
         print("Order is Empty!")
         return
-
-    print("{:<6} {:<20} {:>12} {:>10} {:>12}".format("ID", "Name", "Price", "Quantity", "Total"))
-    print("--------------------------------------------------------------------")
+    print("--------------------------- Current Order Details --------------------------")
+    print("-----------------------------------------------------------------------------")
+    print("{:<6} {:<20} {:>12} {:>15} {:>15}".format("ID", "Name", "Price", "Quantity", "Total"))
+    print("-----------------------------------------------------------------------------")
     for item in order:
         subtotal = item["Price"] * item["Quantity"]
-        print("{:<6} {:<20} {:>12} {:>10} {:>12}".format(
+        print("{:<6} {:<20} {:>12} {:>15} {:>15}".format(
             item["Item ID"],
             item["Name"],
             format_currency(item["Price"]),
             item["Quantity"],
             format_currency(subtotal),
         ))
-    print("--------------------------------------------------------------------")
-
+    print("-----------------------------------------------------------------------------")
 
 def update_order():
     if not order:
@@ -263,7 +307,6 @@ def update_order():
     order_item["Quantity"] = new_quantity
     print("Order updated successfully!")
 
-
 def remove_item_from_order():
     if not order:
         print("Order is Empty! Nothing to remove.")
@@ -293,7 +336,6 @@ def remove_item_from_order():
     order.remove(order_item)
     print("Item removed from order successfully.")
 
-
 def calculate_bill():
     if not order:
         print("Order is Empty! No bill available.")
@@ -306,51 +348,63 @@ def calculate_bill():
         grand_total += subtotal
         print("{:<4} {:<17} x{:<3} {:>12}".format(f"{index:02d}.", item["Name"], item["Quantity"], format_currency(subtotal)))
 
-    print("---------------------------")
+    print("-----------------------------------------------------")
     print("{:<25} {:>12}".format("Grand Total", format_currency(grand_total)))
     print("=====================================================")
     return grand_total
 
-
 def checkout():
-    global order
-
     if not order:
         print("Order is Empty! Cannot proceed to checkout.")
         return
 
-    total_amount = calculate_bill()
-    confirm = input("Proceed to Checkout? (Y/N): ").strip().lower()
-    if confirm != "y":
+    grand_total = calculate_bill()
+
+    name = input("Enter customer name (leave blank for 'Guest'): ").strip() or "Guest"
+    phone = input("Enter customer phone (optional): ").strip()
+
+    confirm = input(f"Proceed to checkout and generate bill for {name}? (y/n): ")
+    if confirm.lower() != 'y':
         print("Checkout cancelled.")
         return
 
-    print()
-    print("========= RECEIPT =========")
-    for index, item in enumerate(order, start=1):
-        subtotal = item["Price"] * item["Quantity"]
-        print()
-        print(f"{index:02d}.")
-        print(f"{item['Name']} x{item['Quantity']}")
-        print(format_currency(subtotal))
+    lines = []
+    lines.append("="*60)
+    lines.append("{:^60}".format("Food Order - RECEIPT"))
+    lines.append("="*60)
+    lines.append(f"Customer: {name}")
+    if phone:
+        lines.append(f"Phone   : {phone}")
+    lines.append(f"Date and Time   : {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    lines.append("-"*60)
+    lines.append("{:<6} {:<20} {:>7} {:>12}".format("ID","Name","Qty","Subtotal"))
+    lines.append("-"*60)
 
-    print()
-    print("------------------")
-    print("Grand Total")
-    print(format_currency(total_amount))
-    print()
-    print("Thank you!")
-    print("============================")
+    for item in order:
+        subtotal = item["Price"] * item["Quantity"]
+        lines.append("{:<6} {:<20} {:>6} {:>12}".format(item["Item ID"], item["Name"][:25], item["Quantity"], format_currency(subtotal)))
+
+    
+    lines.append("-"*60)
+    lines.append(f"{'Grand Total:':>26} {format_currency(grand_total)}")
+    lines.append("="*60)
+
+    bill_text = "\n".join(lines)
+
+    print(f"\n{bill_text}\n")
+    print("Receipt printed!")
 
     order.clear()
+    save_order()
+    save_menu()
+    print("Thank you for ordering with us!")
 
 def exit_system():
     print("Thank you for ordering with us!")
     print("Good Bye! Have a nice day!")
-    print("Exiting the Shopping Order System...")
+    print("Exiting the Resturant Order System...")
     input("Press Enter to close window!")
     sys.exit()
-
 
 while True:
     print()
