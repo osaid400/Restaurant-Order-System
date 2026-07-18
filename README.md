@@ -8,7 +8,6 @@ A console-based Restaurant Order System built with Python. This project demonstr
 
 * View Restaurant Menu
 * Search Food Item
-
   * By Item ID
   * By Name
   * By Category
@@ -215,10 +214,8 @@ Date and Time: 2026-07-17 19:42:15
 ID     Name                  Qty      Subtotal
 ------------------------------------------------------------
 105    Small Pizza            2      Rs. 2400
-      Small Pizza Rs. 1200 × 2 = Rs. 2400
 
 113    Cold Drink             2      Rs. 240
-      Cold Drink Rs. 120 × 2 = Rs. 240
 
 ------------------------------------------------------------
 Grand Total:                 Rs. 2640
