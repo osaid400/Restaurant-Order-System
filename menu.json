@@ -1,177 +1,57 @@
 [
-     {
-          "Item ID": 101,
-          "Name": "Zinger Burger",
-          "Category": "Burger",
-          "Price": 650,
-          "Stock": 20
-     },
-     {
-          "Item ID": 102,
-          "Name": "Beef Burger",
-          "Category": "Burger",
-          "Price": 750,
-          "Stock": 18
-     },
-     {
-          "Item ID": 103,
-          "Name": "Chicken Shawarma",
-          "Category": "Wrap",
-          "Price": 450,
-          "Stock": 21
-     },
-     {
-          "Item ID": 104,
-          "Name": "Pizza Slice",
-          "Category": "Pizza",
-          "Price": 300,
-          "Stock": 30
-     },
-     {
-          "Item ID": 105,
-          "Name": "Small Pizza",
-          "Category": "Pizza",
-          "Price": 1200,
-          "Stock": 8
-     },
-     {
-          "Item ID": 106,
-          "Name": "Large Pizza",
-          "Category": "Pizza",
-          "Price": 2200,
-          "Stock": 8
-     },
-     {
-          "Item ID": 107,
-          "Name": "Chicken Biryani",
-          "Category": "Rice",
-          "Price": 400,
-          "Stock": 25
-     },
-     {
-          "Item ID": 108,
-          "Name": "Beef Biryani",
-          "Category": "Rice",
-          "Price": 500,
-          "Stock": 16
-     },
-     {
-          "Item ID": 109,
-          "Name": "Chicken Karahi",
-          "Category": "Desi",
-          "Price": 1800,
-          "Stock": 10
-     },
-     {
-          "Item ID": 110,
-          "Name": "Beef Karahi",
-          "Category": "Desi",
-          "Price": 2200,
-          "Stock": 8
-     },
-     {
-          "Item ID": 111,
-          "Name": "French Fries",
-          "Category": "Sides",
-          "Price": 250,
-          "Stock": 40
-     },
-     {
-          "Item ID": 112,
-          "Name": "Chicken Nuggets",
-          "Category": "Sides",
-          "Price": 550,
-          "Stock": 25
-     },
-     {
-          "Item ID": 113,
-          "Name": "Cold Drink",
-          "Category": "Beverage",
-          "Price": 120,
-          "Stock": 60
-     },
-     {
-          "Item ID": 114,
-          "Name": "Mineral Water",
-          "Category": "Beverage",
-          "Price": 80,
-          "Stock": 70
-     },
-     {
-          "Item ID": 115,
-          "Name": "Coffee",
-          "Category": "Hot Drink",
-          "Price": 250,
-          "Stock": 25
-     },
-     {
-          "Item ID": 116,
-          "Name": "Tea",
-          "Category": "Hot Drink",
-          "Price": 120,
-          "Stock": 35
-     },
-     {
-          "Item ID": 117,
-          "Name": "Ice Cream",
-          "Category": "Dessert",
-          "Price": 300,
-          "Stock": 20
-     },
-     {
-          "Item ID": 118,
-          "Name": "Chocolate Cake",
-          "Category": "Dessert",
-          "Price": 350,
-          "Stock": 15
-     },
-     {
-          "Item ID": 119,
-          "Name": "Pasta",
-          "Category": "Italian",
-          "Price": 850,
-          "Stock": 15
-     },
-     {
-          "Item ID": 120,
-          "Name": "Lasagna",
-          "Category": "Italian",
-          "Price": 950,
-          "Stock": 10
-     },
-     {
-          "Item ID": 121,
-          "Name": "Club Sandwich",
-          "Category": "Sandwich",
-          "Price": 550,
-          "Stock": 18
-     },
-     {
-          "Item ID": 122,
-          "Name": "Chicken Roll",
-          "Category": "Roll",
-          "Price": 280,
-          "Stock": 30
-     },
-     {
-          "Item ID": 123,
-          "Name": "Chicken Tikka",
-          "Category": "BBQ",
-          "Price": 550,
-          "Stock": 20
-     },
-     {
-          "Item ID": 124,
-          "Name": "Seekh Kebab",
-          "Category": "BBQ",
-          "Price": 450,
-          "Stock": 20
-     },
-     {
-          "Item ID": 125,
-          "Name": "Falooda",
-          "Category": "Dessert",
-          "Price": 320,
-          "Stock": 15
-     }
+    {"Item ID":101,"Name":"Zinger Burger","Category":"Burger","Price":650,"Stock":20},
+    {"Item ID":102,"Name":"Beef Burger","Category":"Burger","Price":750,"Stock":18},
+    {"Item ID":103,"Name":"Chicken Cheese Burger","Category":"Burger","Price":700,"Stock":20},
+    {"Item ID":104,"Name":"Double Zinger Burger","Category":"Burger","Price":950,"Stock":15},
+    {"Item ID":105,"Name":"Mighty Zinger Burger","Category":"Burger","Price":1100,"Stock":12},
+
+    {"Item ID":106,"Name":"Pizza Slice","Category":"Pizza","Price":300,"Stock":30},
+    {"Item ID":107,"Name":"Small Pizza","Category":"Pizza","Price":1200,"Stock":10},
+    {"Item ID":108,"Name":"Large Pizza","Category":"Pizza","Price":2200,"Stock":8},
+    {"Item ID":109,"Name":"Cheese Lover Pizza","Category":"Pizza","Price":1800,"Stock":10},
+    {"Item ID":110,"Name":"Fajita Pizza","Category":"Pizza","Price":1900,"Stock":10},
+
+    {"Item ID":111,"Name":"Chicken Shawarma","Category":"Wrap","Price":450,"Stock":25},
+    {"Item ID":112,"Name":"Chicken Roll","Category":"Roll","Price":280,"Stock":30},
+    {"Item ID":113,"Name":"Club Sandwich","Category":"Sandwich","Price":550,"Stock":18},
+
+    {"Item ID":114,"Name":"Chicken Biryani","Category":"Rice","Price":400,"Stock":25},
+    {"Item ID":115,"Name":"Beef Biryani","Category":"Rice","Price":500,"Stock":18},
+    {"Item ID":116,"Name":"Chicken Fried Rice","Category":"Chinese","Price":700,"Stock":18},
+    {"Item ID":117,"Name":"Chicken Chow Mein","Category":"Chinese","Price":750,"Stock":18},
+    {"Item ID":118,"Name":"Chicken Manchurian","Category":"Chinese","Price":850,"Stock":15},
+
+    {"Item ID":119,"Name":"Chicken Karahi","Category":"Desi","Price":1800,"Stock":10},
+    {"Item ID":120,"Name":"Beef Karahi","Category":"Desi","Price":2200,"Stock":8},
+
+    {"Item ID":121,"Name":"Chicken Tikka","Category":"BBQ","Price":550,"Stock":20},
+    {"Item ID":122,"Name":"Seekh Kebab","Category":"BBQ","Price":450,"Stock":20},
+    {"Item ID":123,"Name":"Chicken Wings","Category":"BBQ","Price":650,"Stock":18},
+
+    {"Item ID":124,"Name":"French Fries","Category":"Sides","Price":250,"Stock":40},
+    {"Item ID":125,"Name":"Loaded Fries","Category":"Sides","Price":450,"Stock":25},
+    {"Item ID":126,"Name":"Cheese Fries","Category":"Sides","Price":350,"Stock":25},
+    {"Item ID":127,"Name":"Chicken Nuggets","Category":"Sides","Price":550,"Stock":25},
+    {"Item ID":128,"Name":"Garlic Bread","Category":"Sides","Price":300,"Stock":20},
+
+    {"Item ID":129,"Name":"Pasta Alfredo","Category":"Italian","Price":850,"Stock":15},
+    {"Item ID":130,"Name":"Lasagna","Category":"Italian","Price":950,"Stock":10},
+    {"Item ID":131,"Name":"Spaghetti Bolognese","Category":"Italian","Price":900,"Stock":12},
+
+    {"Item ID":132,"Name":"Caesar Salad","Category":"Salad","Price":450,"Stock":15},
+    {"Item ID":133,"Name":"Russian Salad","Category":"Salad","Price":400,"Stock":15},
+
+    {"Item ID":134,"Name":"Cold Drink","Category":"Beverage","Price":120,"Stock":60},
+    {"Item ID":135,"Name":"Mineral Water","Category":"Beverage","Price":80,"Stock":70},
+    {"Item ID":136,"Name":"Fresh Lime","Category":"Beverage","Price":180,"Stock":30},
+    {"Item ID":137,"Name":"Mango Juice","Category":"Beverage","Price":250,"Stock":20},
+    {"Item ID":138,"Name":"Chocolate Milkshake","Category":"Beverage","Price":350,"Stock":15},
+    {"Item ID":139,"Name":"Coffee","Category":"Hot Drink","Price":250,"Stock":25},
+    {"Item ID":140,"Name":"Tea","Category":"Hot Drink","Price":120,"Stock":35},
+
+    {"Item ID":141,"Name":"Ice Cream","Category":"Dessert","Price":300,"Stock":20},
+    {"Item ID":142,"Name":"Chocolate Cake","Category":"Dessert","Price":350,"Stock":15},
+    {"Item ID":143,"Name":"Brownie","Category":"Dessert","Price":320,"Stock":15},
+    {"Item ID":144,"Name":"Molten Lava Cake","Category":"Dessert","Price":450,"Stock":12},
+    {"Item ID":145,"Name":"Falooda","Category":"Dessert","Price":320,"Stock":15}
 ]
