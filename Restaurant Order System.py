@@ -10,7 +10,7 @@ import os
 import json
 
 
-class Menu_Item():
+class Menu_Item:
 
     def __init__(self, item_id, name, category, price, stock):
         self.item_id = item_id
@@ -20,14 +20,14 @@ class Menu_Item():
         self.stock = stock
 
     def to_dict(self) -> dict:
-            return {
-                "Item ID": self.item_id,
-                "Name": self.name,
-                "Category": self.category,
-                "Price": self.price,
-                "Stock": self.stock
-            }
-    
+        return {
+            "Item ID": self.item_id,
+            "Name": self.name,
+            "Category": self.category,
+            "Price": self.price,
+            "Stock": self.stock
+        }
+
     @classmethod
     def from_dict(cls, data: dict):
         return cls(
@@ -36,27 +36,27 @@ class Menu_Item():
             category=data["Category"],
             price=data["Price"],
             stock=data["Stock"]
-            )        
+        )
 
 
-class Order_Item():
+class Order_Item:
 
     def __init__(self, menu_item, quantity):
         self.menu_item = menu_item
         self.quantity = quantity
 
-    def to_dict(self) :
-            return {
-                "Menu ID": self.menu_item,
-                "Quantity": self.quantity
-            }
-    
-    @classmethod
-    def subtotal (self):
-        return self.menu_item.price * self.quantity
+    def to_dict(self):
+        return {
+            "Menu ID": getattr(self.menu_item, 'item_id', self.menu_item),
+            "Quantity": self.quantity
+        }
+
+    def subtotal(self):
+        price = getattr(self.menu_item, 'price', 0)
+        return price * self.quantity
 
 
-class user():
+class User:
 
     def __init__(self, username, password, role):
         self.username = username
@@ -79,7 +79,7 @@ class user():
         )
 
 
-class Restaurant_Manager():
+class Restaurant_Manager:
 
     def __init__(self, menu, order, history, users, discounts, sales, menu_file="menu.json", order_file="order.json", order_history_file="order_history.json"):
         self.menu_file = menu_file
@@ -187,7 +187,7 @@ class Restaurant_Manager():
             print("No Items in stock!")
             return
 
-        print("========== RESTAURANT MENU ========== ")
+        print("\n========================= RESTAURANT MENU =========================")
         sorted_menu = sorted(self.menu, key=lambda item: (str(item.get("Category", "")).lower(), str(item.get("Name", "")).lower()))
         current_category = None
 
@@ -195,20 +195,20 @@ class Restaurant_Manager():
             category = str(item.get("Category", ""))
             if category != current_category:
                 current_category = category
-                print()
-                print(f"===================== {current_category.upper()} =====================")
-                print("{:<6} {:<22} {:>12} {:>8}".format("ID", "Name", "Price", "Stock"))
-                print("------------------------------------------------------")
+                print(f"\n--- {current_category.upper()} ---")
+                print("{:<8} {:<28} {:>12} {:>8}".format("ID", "Name", "Price", "Stock"))
+                print("-" * 60)
 
-            print("{:<6} {:<22} {:>12} {:>8}".format(
+            print("{:<8} {:<28} {:>12} {:>8}".format(
                 item.get("Item ID", ""),
-                item.get("Name", ""),
-                f"Rs. {item.get('Price', 0)}",
+                str(item.get("Name", ""))[:26],
+                f"Rs. {item.get('Price', 0):.2f}",
                 item.get("Stock", 0),
             ))
+        print("=" * 66)
 
     def search_food(self):
-        print("Search by:\n1. Item ID\n2. Name\n3. Category\n4. Search by Price Range")
+        print("\nSearch by:\n1. Item ID\n2. Name\n3. Category\n4. Search by Price Range")
         search_choice = input("Enter your choice: ").strip()
 
         if search_choice == "1":
@@ -220,13 +220,13 @@ class Restaurant_Manager():
 
             found_item = next((item for item in self.menu if item.get("Item ID") == search_id), None)
             if found_item:
-                print("---------------------------------------------------")
-                print("Name:", found_item.get("Name"))
+                print("-" * 50)
+                print("Name    :", found_item.get("Name"))
                 print("Category:", found_item.get("Category"))
-                print("Item ID:", found_item.get("Item ID"))
-                print("Price:", f"Rs. {found_item.get('Price', 0)}")
-                print("Stock:", found_item.get("Stock"))
-                print("---------------------------------------------------")
+                print("Item ID :", found_item.get("Item ID"))
+                print("Price   :", f"Rs. {found_item.get('Price', 0):.2f}")
+                print("Stock   :", found_item.get("Stock"))
+                print("-" * 50)
                 return
             print("Item ID not found in menu.")
             return
@@ -237,14 +237,14 @@ class Restaurant_Manager():
             if not results:
                 print("No items found with that name.")
                 return
-            print("{:<6} {:<22} {:<12} {:>12} {:>8}".format("ID", "Name", "Category", "Price", "Stock"))
-            print("==========================================================")
+            print("\n{:<8} {:<22} {:<15} {:>12} {:>8}".format("ID", "Name", "Category", "Price", "Stock"))
+            print("=" * 68)
             for item in results:
-                print("{:<6} {:<22} {:<12} {:>12} {:>8}".format(
+                print("{:<8} {:<22} {:<15} {:>12} {:>8}".format(
                     item.get("Item ID"),
-                    item.get("Name"),
-                    item.get("Category"),
-                    f"Rs. {item.get('Price', 0)}",
+                    str(item.get("Name"))[:20],
+                    str(item.get("Category"))[:13],
+                    f"Rs. {item.get('Price', 0):.2f}",
                     item.get("Stock"),
                 ))
             return
@@ -255,14 +255,14 @@ class Restaurant_Manager():
             if not results:
                 print("No items found in that category.")
                 return
-            print("{:<6} {:<22} {:<12} {:>12} {:>8}".format("ID", "Name", "Category", "Price", "Stock"))
-            print("==========================================================")
+            print("\n{:<8} {:<22} {:<15} {:>12} {:>8}".format("ID", "Name", "Category", "Price", "Stock"))
+            print("=" * 68)
             for item in results:
-                print("{:<6} {:<22} {:<12} {:>12} {:>8}".format(
+                print("{:<8} {:<22} {:<15} {:>12} {:>8}".format(
                     item.get("Item ID"),
-                    item.get("Name"),
-                    item.get("Category"),
-                    f"Rs. {item.get('Price', 0)}",
+                    str(item.get("Name"))[:20],
+                    str(item.get("Category"))[:13],
+                    f"Rs. {item.get('Price', 0):.2f}",
                     item.get("Stock"),
                 ))
             return
@@ -276,17 +276,17 @@ class Restaurant_Manager():
                 return
             results = [item for item in self.menu if min_price <= item.get("Price", 0) <= max_price]
             if not results:
-                print(f"No items found in the price range Rs. {min_price} - Rs. {max_price}.")
+                print(f"No items found in the price range Rs. {min_price:.2f} - Rs. {max_price:.2f}.")
                 return
-            print(f"Items in the price range Rs. {min_price} - Rs. {max_price}:")
-            print("{:<6} {:<22} {:<12} {:>12} {:>8}".format("ID", "Name", "Category", "Price", "Stock"))
-            print("==========================================================")
+            print(f"\nItems in the price range Rs. {min_price:.2f} - Rs. {max_price:.2f}:")
+            print("{:<8} {:<22} {:<15} {:>12} {:>8}".format("ID", "Name", "Category", "Price", "Stock"))
+            print("=" * 68)
             for item in results:
-                print("{:<6} {:<22} {:<12} {:>12} {:>8}".format(
+                print("{:<8} {:<22} {:<15} {:>12} {:>8}".format(
                     item.get("Item ID"),
-                    item.get("Name"),
-                    item.get("Category"),
-                    f"Rs. {item.get('Price', 0)}",
+                    str(item.get("Name"))[:20],
+                    str(item.get("Category"))[:13],
+                    f"Rs. {item.get('Price', 0):.2f}",
                     item.get("Stock"),
                 ))
             return
@@ -305,9 +305,9 @@ class Restaurant_Manager():
             print("Item not found!")
             return
 
-        print("Selected Item:")
-        print("Name :", item.get("Name"))
-        print("Price :", f"Rs. {item.get('Price', 0)}")
+        print("\nSelected Item:")
+        print("Name            :", item.get("Name"))
+        print("Price           :", f"Rs. {item.get('Price', 0):.2f}")
         print("Available Stock :", item.get("Stock"))
 
         try:
@@ -338,7 +338,30 @@ class Restaurant_Manager():
             })
         self.save_menu()
         self.save_orders()
-        print(f"{quantity} x {item.get('Name')} added successfully. Remaining Stock: {item.get('Stock')}")
+        print(f"\n{quantity} x {item.get('Name')} added successfully. Remaining Stock: {item.get('Stock')}")
+
+    def view_current_order(self):
+        if not self.order:
+            print("\nYour current order is empty.")
+            return
+
+        print("\n==================== CURRENT ORDER ====================")
+        print("{:<8} {:<24} {:>10} {:>8} {:>12}".format("ID", "Name", "Price", "Qty", "Subtotal"))
+        print("-" * 66)
+        total = 0
+        for item in self.order:
+            sub = item.get("Price", 0) * item.get("Quantity", 0)
+            total += sub
+            print("{:<8} {:<24} {:>10} {:>8} {:>12}".format(
+                item.get("Item ID"),
+                str(item.get("Name"))[:22],
+                f"Rs. {item.get('Price', 0):.2f}",
+                item.get("Quantity"),
+                f"Rs. {sub:.2f}"
+            ))
+        print("-" * 66)
+        print(f"{'Current Total:':>52} Rs. {total:.2f}")
+        print("=" * 66)
 
     def update_order(self):
         if not self.order:
@@ -413,9 +436,26 @@ class Restaurant_Manager():
         self.save_menu()
         print("Item removed from order successfully.")
 
+    def apply_discount(self, grand_total):
+        if grand_total >= 5000:
+            discount = 0.10
+        elif grand_total >= 3000:
+            discount = 0.05
+        else:
+            discount = 0.0
+
+        discounted_total = grand_total * (1 - discount)
+        return discounted_total, discount
+
+    def calculate_gst(self, grand_total):
+        gst_rate = 0.05
+        gst_amount = grand_total * gst_rate
+        total_with_gst = grand_total + gst_amount
+        return total_with_gst, gst_amount
+
     def calculate_bill(self):
         if not self.order:
-            print("======================================")
+            print("\n======================================")
             print("Order is Empty! Cannot calculate bill.")
             print("======================================")
             return 0
@@ -424,35 +464,35 @@ class Restaurant_Manager():
         discounted_total, discount_rate = self.apply_discount(grand_total)
         total_with_gst, gst_amount = self.calculate_gst(discounted_total)
 
-        print("\n==================== FINAL BILL ====================")
-        print("{:<6} {:<20} {:>12} {:>15} {:>15}".format("ID", "Name", "Price", "Quantity", "Total"))
-        print("-----------------------------------------------------")
+        print("\n=========================== FINAL BILL ===========================")
+        print("{:<8} {:<24} {:>12} {:>8} {:>14}".format("ID", "Name", "Price", "Qty", "Total"))
+        print("-" * 68)
         for item in self.order:
             subtotal = item.get("Price", 0) * item.get("Quantity", 0)
-            print("{:<6} {:<20} {:>12} {:>15} {:>15}".format(
+            print("{:<8} {:<24} {:>12} {:>8} {:>14}".format(
                 item.get("Item ID"),
-                item.get("Name"),
-                f"Rs. {item.get('Price', 0)}",
+                str(item.get("Name"))[:22],
+                f"Rs. {item.get('Price', 0):.2f}",
                 item.get("Quantity"),
-                f"Rs. {subtotal}",
+                f"Rs. {subtotal:.2f}",
             ))
-        print("-----------------------------------------------------")
-        print(f"{'Grand Total:':>54} Rs. {grand_total}")
+        print("-" * 68)
+        print(f"{'Subtotal:':>52} Rs. {grand_total:>10.2f}")
         if discount_rate > 0:
-            print(f"{'Discount Applied:':>54} {discount_rate * 100:.0f}%")
-            print(f"{'Total after Discount:':>54} Rs. {discounted_total}")
-        print(f"{'GST (17%):':>54} Rs. {gst_amount}")
-        print(f"{'Total Payable:':>54} Rs. {total_with_gst}")
-        print("=====================================================")
+            print(f"{'Discount (' + str(int(discount_rate * 100)) + '%):':>52} Rs. -{(grand_total - discounted_total):>9.2f}")
+            print(f"{'Total after Discount:':>52} Rs. {discounted_total:>10.2f}")
+        print(f"{'GST (5%):':>52} Rs. {gst_amount:>10.2f}")
+        print("=" * 68)
+        print(f"{'Total Payable:':>52} Rs. {total_with_gst:>10.2f}")
+        print("==================================================================")
 
         return total_with_gst
 
     def choose_order_type(self):
-        print("==================== ORDER TYPE ====================")
-        print("Choose Order Type:")
+        print("\n==================== ORDER TYPE ====================")
         print("1. Dine-In")
         print("2. Takeaway")
-        print("=====================================================")
+        print("====================================================")
 
         order_type_choice = input("Enter your choice (1 or 2): ").strip()
 
@@ -460,26 +500,25 @@ class Restaurant_Manager():
             try:
                 table_number = int(input("Table Number (1 to 10): ").strip())
                 if table_number < 1 or table_number > 10:
-                    print("Invalid table number! Please enter a number between 1 and 10.")
-                    return "Dine-In", None
+                    print("Invalid table number! Defaulting to Table 1.")
+                    return "Dine-In", 1
             except ValueError:
-                print("Invalid table number! Please enter a valid number.")
-                return "Dine-In", None
+                print("Invalid input! Defaulting to Table 1.")
+                return "Dine-In", 1
             return "Dine-In", table_number
 
         if order_type_choice == "2":
             return "Takeaway", None
 
         print("Invalid choice! Defaulting to 'Dine-In'.")
-        return "Dine-In", None
+        return "Dine-In", 1
 
     def payment_method(self):
-        print("==================== PAYMENT METHOD ====================")
-        print("Choose Payment Method:")
+        print("\n==================== PAYMENT METHOD ====================")
         print("1. Cash")
         print("2. Card")
         print("3. Mobile Payment")
-        print("=========================================================")
+        print("========================================================")
 
         payment_choice = input("Enter your choice (1, 2, or 3): ").strip()
 
@@ -493,34 +532,19 @@ class Restaurant_Manager():
         print("Invalid choice! Defaulting to 'Cash'.")
         return "Cash"
 
-    def apply_discount(self, grand_total):
-        if grand_total >= 5000:
-            discount = 0.10
-        elif grand_total >= 3000:
-            discount = 0.05
-        else:
-            discount = 0.0
-
-        discounted_total = grand_total * (1 - discount)
-        return discounted_total, discount
-
-    def calculate_gst(self, grand_total):
-        gst_rate = 0.5
-        gst_amount = grand_total * gst_rate
-        total_with_gst = grand_total + gst_amount
-        return total_with_gst, gst_amount
-
     def checkout(self):
         if not self.order:
             print("Order is Empty! Cannot proceed to checkout.")
             return
 
-        grand_total = self.calculate_bill()
-        name = input("Enter customer name (leave blank for 'Guest'): ").strip() or "Guest"
+        order_type, table_num = self.choose_order_type()
+        total_payable = self.calculate_bill()
+        
+        name = input("\nEnter customer name (leave blank for 'Guest'): ").strip() or "Guest"
         phone = input("Enter customer phone (optional): ").strip()
         payment_type = self.payment_method()
 
-        confirm = input(f"Proceed to checkout and generate bill for {name}? (y/n): ")
+        confirm = input(f"\nProceed to checkout and generate bill for {name}? (y/n): ")
         if confirm.lower() != 'y':
             print("Checkout cancelled.")
             return
@@ -531,30 +555,30 @@ class Restaurant_Manager():
 
         lines = []
         lines.append("=" * 60)
-        lines.append("{:^60}".format("Food Order - RECEIPT"))
+        lines.append("{:^60}".format("RESTAURANT RECEIPT"))
         lines.append("=" * 60)
-        lines.append(f"Receipt No: {receipt_number}")
-        lines.append(f"Customer: {name}")
+        lines.append(f"Receipt No    : {receipt_number}")
+        lines.append(f"Customer      : {name}")
         if phone:
-            lines.append(f"Phone   : {phone}")
-        lines.append(f"Date and Time   : {now.strftime('%Y-%m-%d %H:%M:%S')}")
+            lines.append(f"Phone         : {phone}")
+        lines.append(f"Order Type    : {order_type}" + (f" (Table {table_num})" if table_num else ""))
+        lines.append(f"Date & Time   : {now.strftime('%Y-%m-%d %H:%M:%S')}")
         lines.append("-" * 60)
-        lines.append("{:<6} {:<20} {:>7} {:>12}".format("ID", "Name", "Qty", "Subtotal"))
+        lines.append("{:<6} {:<24} {:>8} {:>18}".format("ID", "Name", "Qty", "Subtotal"))
         lines.append("-" * 60)
 
         for item in self.order:
             subtotal = item.get("Price", 0) * item.get("Quantity", 0)
-            lines.append("{:<6} {:<20} {:>6} {:>12}".format(
+            lines.append("{:<6} {:<24} {:>8} {:>18}".format(
                 item.get("Item ID"),
-                str(item.get("Name", ""))[:25],
+                str(item.get("Name", ""))[:22],
                 item.get("Quantity"),
-                f"Rs. {subtotal}",
+                f"Rs. {subtotal:.2f}",
             ))
-            lines.append(f"   {str(item.get('Name', ''))[:25]} Rs. {item.get('Price', 0)} × {item.get('Quantity', 0)} = Rs. {subtotal}")
 
         lines.append("-" * 60)
-        lines.append(f"{'Grand Total:':>26} Rs. {grand_total}")
-        lines.append(f"{'Payment Method:':>26} {payment_type}")
+        lines.append(f"{'Total Payable:':>38} Rs. {total_payable:.2f}")
+        lines.append(f"{'Payment Method:':>38} {payment_type}")
         lines.append("=" * 60)
 
         bill_text = "\n".join(lines)
@@ -575,6 +599,8 @@ class Restaurant_Manager():
             "Date": now.strftime("%Y-%m-%d"),
             "Time": now.strftime("%H:%M:%S"),
             "Payment Method": payment_type,
+            "Order Type": order_type,
+            "Table": table_num,
             "Items": [
                 {
                     "Item ID": item.get("Item ID"),
@@ -585,7 +611,7 @@ class Restaurant_Manager():
                 }
                 for item in self.order
             ],
-            "Grand Total": grand_total,
+            "Grand Total": total_payable,
         })
         self.save_history()
 
@@ -609,9 +635,94 @@ class Restaurant_Manager():
             return max(receipt_numbers) + 1
         return 1001
 
+    def add_new_item(self):
+        print("\n===================== ADD NEW ITEM =====================")
+        try:
+            item_id = int(input("Enter Item ID: "))
+        except ValueError:
+            print("Invalid ID! Must be a number.")
+            return
+
+        if any(item.get("Item ID") == item_id for item in self.menu):
+            print("An item with this ID already exists!")
+            return
+
+        name = input("Enter Item Name: ").strip()
+        category = input("Enter Category: ").strip()
+        try:
+            price = float(input("Enter Price: "))
+            stock = int(input("Enter Stock Quantity: "))
+        except ValueError:
+            print("Invalid input for price or stock!")
+            return
+
+        new_item = Menu_Item(item_id, name, category, price, stock)
+        self.menu.append(new_item.to_dict())
+        self.save_menu()
+        print(f"Item '{name}' added successfully!")
+
+    def update_item(self):
+        print("\n===================== UPDATE ITEM =====================")
+        try:
+            item_id = int(input("Enter Item ID to update: "))
+        except ValueError:
+            print("Invalid ID!")
+            return
+
+        item = next((i for i in self.menu if i.get("Item ID") == item_id), None)
+        if not item:
+            print("Item not found!")
+            return
+
+        print(f"Updating '{item.get('Name')}' (Press Enter to keep current value)")
+        new_name = input(f"New Name [{item.get('Name')}]: ").strip() or item.get('Name')
+        new_category = input(f"New Category [{item.get('Category')}]: ").strip() or item.get('Category')
+        
+        price_input = input(f"New Price [{item.get('Price')}]: ").strip()
+        new_price = float(price_input) if price_input else item.get('Price')
+        
+        stock_input = input(f"New Stock [{item.get('Stock')}]: ").strip()
+        new_stock = int(stock_input) if stock_input else item.get('Stock')
+
+        item["Name"] = new_name
+        item["Category"] = new_category
+        item["Price"] = new_price
+        item["Stock"] = new_stock
+
+        self.save_menu()
+        print("Item updated successfully!")
+
+    def remove_item(self):
+        print("\n===================== REMOVE ITEM =====================")
+        try:
+            item_id = int(input("Enter Item ID to remove: "))
+        except ValueError:
+            print("Invalid ID!")
+            return
+
+        item = next((i for i in self.menu if i.get("Item ID") == item_id), None)
+        if not item:
+            print("Item not found!")
+            return
+
+        self.menu.remove(item)
+        self.save_menu()
+        print("Item removed successfully!")
+
+    def view_order_history(self):
+        if not self.history:
+            print("\nNo order history found.")
+            return
+
+        print("\n========================= ORDER HISTORY =========================")
+        for record in self.history:
+            print(f"Receipt #: {record.get('Receipt No')} | Date: {record.get('Date')} {record.get('Time')} | Customer: {record.get('Customer Name')}")
+            print(f"Total: Rs. {record.get('Grand Total', 0):.2f} | Payment: {record.get('Payment Method')}")
+            print("-" * 65)
+
     def view_sales(self):
         if not self.history:
-            print("==================== SALES REPORT ====================")
+            print("\n==================== SALES REPORT ====================")
             print("No sales data available.")
             print("=======================================================")
             return
@@ -619,46 +730,10 @@ class Restaurant_Manager():
         total_sales = sum(order_record.get("Grand Total", 0) for order_record in self.history)
         total_orders = len(self.history)
 
-        print("==================== SALES REPORT ====================")
-        print(f"Total Orders: {total_orders}")
-        print(f"Total Sales: Rs. {total_sales}")
+        print("\n==================== SALES REPORT ====================")
+        print(f"Total Orders : {total_orders}")
+        print(f"Total Sales  : Rs. {total_sales:.2f}")
         print("=======================================================")
-
-    def today_sales(self):
-        today = datetime.now().strftime("%Y-%m-%d")
-        today_orders = [order for order in self.history if order.get("Date") == today]
-        if not today_orders:
-            print("No sales for today.")
-            return
-        total_sales = sum(order.get("Grand Total", 0) for order in today_orders)
-        print(f"Today's Sales: Rs. {total_sales}")
-
-    def top_selling_items(self):
-        if not self.history:
-            print("No sales data available.")
-            return
-
-        item_sales = {}
-        for order_record in self.history:
-            for item in order_record.get("Items", []):
-                item_id = item.get("Item ID")
-                quantity = item.get("Quantity", 0)
-                if item_id in item_sales:
-                    item_sales[item_id]["Quantity"] += quantity
-                else:
-                    item_sales[item_id] = {
-                        "Name": item.get("Name"),
-                        "Quantity": quantity,
-                    }
-
-        top_items = sorted(item_sales.items(), key=lambda x: x[1]["Quantity"], reverse=True)[:5]
-
-        print("==================== TOP SELLING ITEMS ====================")
-        print("{:<6} {:<22} {:>12}".format("ID", "Name", "Total Sold"))
-        print("===========================================================")
-        for item_id, data in top_items:
-            print("{:<6} {:<22} {:>12}".format(item_id, data["Name"], data["Quantity"]))
-        print("===========================================================")
 
     def admin_login(self):
         admin_username = "admin"
@@ -676,8 +751,7 @@ class Restaurant_Manager():
 
     def admin_menu(self):
         while True:
-            print("===================== ADMIN MENU ======================")
-            print("=============== Select the Option (0-8) ===============")
+            print("\n===================== ADMIN MENU ======================")
             print("1. View Menu")
             print("2. Add New Item")
             print("3. Update Item")
@@ -688,16 +762,10 @@ class Restaurant_Manager():
             print("=========================================================")
 
             try:
-                choice = int(input("Enter the number: "))
+                choice = int(input("Enter option number: "))
             except ValueError:
                 print("Invalid Choice! Please enter a number.")
                 continue
-            except Exception as e:
-                print(f"An error occurred: {e}")
-                continue
-
-            print()
-            print()
 
             if choice == 1:
                 self.view_menu()
@@ -719,8 +787,7 @@ class Restaurant_Manager():
 
     def customer_menu(self):
         while True:
-            print("=============== Welcome to the Restaurant Order System ===============")
-            print("Please select an option from the menu below:")
+            print("\n=============== CUSTOMER MENU ===============")
             print("1. View Menu")
             print("2. Search Food Item")
             print("3. Place Order")
@@ -729,20 +796,14 @@ class Restaurant_Manager():
             print("6. Remove Item from Order")
             print("7. Calculate Bill")
             print("8. Checkout")
-            print("0. Exit as Customer")
-            print("======================================================================")
+            print("0. Back to Main Menu")
+            print("=============================================")
 
             try:
-                choice = int(input("Enter the number: "))
+                choice = int(input("Enter option number: "))
             except ValueError:
                 print("Invalid Choice! Please enter a number.")
                 continue
-            except Exception as e:
-                print(f"An error occurred: {e}")
-                continue
-
-            print()
-            print()
 
             if choice == 1:
                 self.view_menu()
@@ -761,15 +822,14 @@ class Restaurant_Manager():
             elif choice == 8:
                 self.checkout()
             elif choice == 0:
-                self.main_menu()
+                return
             else:
                 print("Invalid choice! Please try again.")
 
     def exit_system(self):
-        print("Thank you for ordering with us!")
+        print("\nThank you for ordering with us!")
         print("Good Bye! Have a nice day!")
         print("Exiting the Restaurant Order System...")
-        input("Press Enter to close window!")
         sys.exit()
 
 
@@ -781,8 +841,7 @@ def main_menu():
     restaurant_manager.load_users()
 
     while True:
-        print("=============== Welcome to the Restaurant Order System ===============")
-        print("Please select an option from the menu below:")
+        print("\n=============== Welcome to the Restaurant Order System ===============")
         print("1. Order as Customer")
         print("2. Login as Admin")
         print("0. Exit")
@@ -795,12 +854,11 @@ def main_menu():
         elif choice == "2":
             if restaurant_manager.admin_login():
                 restaurant_manager.admin_menu()
-            else:
-                print("Access denied. Returning to main menu.")
         elif choice == "0":
             restaurant_manager.exit_system()
         else:
             print("Invalid choice! Please try again.")
 
 
-main_menu()
+if __name__ == "__main__":
+    main_menu()
