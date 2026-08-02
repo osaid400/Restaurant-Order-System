@@ -144,7 +144,7 @@
         "Name": "Chicken Tikka",
         "Category": "BBQ",
         "Price": 600.0,
-        "Stock": 20
+        "Stock": 18
     },
     {
         "Item ID": 122,
@@ -277,7 +277,7 @@
         "Name": "Tea",
         "Category": "Hot Drink",
         "Price": 120,
-        "Stock": 35
+        "Stock": 34
     },
     {
         "Item ID": 141,
@@ -326,7 +326,7 @@
         "Name": "Pepsi 350 ml",
         "Category": "Cold Drink",
         "Price": 120.0,
-        "Stock": 36
+        "Stock": 35
     },
     {
         "Item ID": 148,

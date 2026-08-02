@@ -345,9 +345,9 @@ class Restaurant_Manager:
             print("\nYour current order is empty.")
             return
 
-        print("\n==================== CURRENT ORDER ====================")
+        print("\n========================== CURRENT ORDER ==========================")
         print("{:<8} {:<24} {:>10} {:>8} {:>12}".format("ID", "Name", "Price", "Qty", "Subtotal"))
-        print("-" * 66)
+        print("-" * 70)
         total = 0
         for item in self.order:
             sub = item.get("Price", 0) * item.get("Quantity", 0)
@@ -359,9 +359,9 @@ class Restaurant_Manager:
                 item.get("Quantity"),
                 f"Rs. {sub:.2f}"
             ))
-        print("-" * 66)
+        print("-" * 70)
         print(f"{'Current Total:':>52} Rs. {total:.2f}")
-        print("=" * 66)
+        print("=" * 70)
 
     def update_order(self):
         if not self.order:
@@ -456,17 +456,17 @@ class Restaurant_Manager:
     def calculate_bill(self):
         if not self.order:
             print("\n======================================")
-            print("Order is Empty! Cannot calculate bill.")
-            print("======================================")
+            print(" Order is Empty! Cannot calculate bill. ")
+            print("========================================")
             return 0
 
         grand_total = sum(item.get("Price", 0) * item.get("Quantity", 0) for item in self.order)
         discounted_total, discount_rate = self.apply_discount(grand_total)
         total_with_gst, gst_amount = self.calculate_gst(discounted_total)
 
-        print("\n=========================== FINAL BILL ===========================")
+        print("\n=============================== FINAL BILL ===============================")
         print("{:<8} {:<24} {:>12} {:>8} {:>14}".format("ID", "Name", "Price", "Qty", "Total"))
-        print("-" * 68)
+        print("-" * 75)
         for item in self.order:
             subtotal = item.get("Price", 0) * item.get("Quantity", 0)
             print("{:<8} {:<24} {:>12} {:>8} {:>14}".format(
@@ -476,15 +476,15 @@ class Restaurant_Manager:
                 item.get("Quantity"),
                 f"Rs. {subtotal:.2f}",
             ))
-        print("-" * 68)
+        print("-" * 75)
         print(f"{'Subtotal:':>52} Rs. {grand_total:>10.2f}")
         if discount_rate > 0:
             print(f"{'Discount (' + str(int(discount_rate * 100)) + '%):':>52} Rs. -{(grand_total - discounted_total):>9.2f}")
             print(f"{'Total after Discount:':>52} Rs. {discounted_total:>10.2f}")
         print(f"{'GST (5%):':>52} Rs. {gst_amount:>10.2f}")
-        print("=" * 68)
+        print("=" * 75)
         print(f"{'Total Payable:':>52} Rs. {total_with_gst:>10.2f}")
-        print("==================================================================")
+        print("==========================================================================")
 
         return total_with_gst
 
