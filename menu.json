@@ -73,8 +73,8 @@
         "Item ID": 111,
         "Name": "Chicken Shawarma",
         "Category": "Wrap",
-        "Price": 450,
-        "Stock": 25
+        "Price": 300.0,
+        "Stock": 30
     },
     {
         "Item ID": 112,
@@ -95,7 +95,7 @@
         "Name": "Chicken Biryani",
         "Category": "Rice",
         "Price": 400,
-        "Stock": 25
+        "Stock": 23
     },
     {
         "Item ID": 115,
@@ -284,7 +284,7 @@
         "Name": "Ice Cream",
         "Category": "Dessert",
         "Price": 300,
-        "Stock": 20
+        "Stock": 18
     },
     {
         "Item ID": 142,
@@ -313,5 +313,26 @@
         "Category": "Dessert",
         "Price": 320,
         "Stock": 15
+    },
+    {
+        "Item ID": 146,
+        "Name": "Cocacola 350 ml",
+        "Category": "Cold Drink",
+        "Price": 120.0,
+        "Stock": 40
+    },
+    {
+        "Item ID": 147,
+        "Name": "Pepsi 350 ml",
+        "Category": "Cold Drink",
+        "Price": 120.0,
+        "Stock": 36
+    },
+    {
+        "Item ID": 148,
+        "Name": "7up 350 ml",
+        "Category": "Cold Drink",
+        "Price": 120.0,
+        "Stock": 40
     }
 ]

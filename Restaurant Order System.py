@@ -195,9 +195,9 @@ class Restaurant_Manager:
             category = str(item.get("Category", ""))
             if category != current_category:
                 current_category = category
-                print(f"\n--- {current_category.upper()} ---")
+                print(f"\n---------------------------- {current_category.upper()} -----------------------------")
                 print("{:<8} {:<28} {:>12} {:>8}".format("ID", "Name", "Price", "Stock"))
-                print("-" * 60)
+                print("-" * 62)
 
             print("{:<8} {:<28} {:>12} {:>8}".format(
                 item.get("Item ID", ""),
