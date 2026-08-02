@@ -345,7 +345,7 @@ class Restaurant_Manager:
             print("\nYour current order is empty.")
             return
 
-        print("\n========================== CURRENT ORDER ==========================")
+        print("\n============================ CURRENT ORDER ==========================")
         print("{:<8} {:<24} {:>10} {:>8} {:>12}".format("ID", "Name", "Price", "Qty", "Subtotal"))
         print("-" * 70)
         total = 0
