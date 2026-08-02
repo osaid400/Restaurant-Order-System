@@ -1,8 +1,8 @@
-# ==========================================
-# RESTAURANT ORDER SYSTEM
+# ====================================================
+# RESTAURANT ORDER SYSTEM (Admin and User Panel)
 # Author: Muhammad Abdullah Farooq
 # Language: Python 3
-# ==========================================
+# ====================================================
 
 from datetime import datetime
 import sys
