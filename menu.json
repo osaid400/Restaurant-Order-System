@@ -102,7 +102,7 @@
         "Name": "Beef Biryani",
         "Category": "Rice",
         "Price": 500,
-        "Stock": 18
+        "Stock": 16
     },
     {
         "Item ID": 116,
@@ -143,8 +143,8 @@
         "Item ID": 121,
         "Name": "Chicken Tikka",
         "Category": "BBQ",
-        "Price": 600.0,
-        "Stock": 18
+        "Price": 550.0,
+        "Stock": 20
     },
     {
         "Item ID": 122,
@@ -333,6 +333,6 @@
         "Name": "7up 350 ml",
         "Category": "Cold Drink",
         "Price": 120.0,
-        "Stock": 40
+        "Stock": 38
     }
 ]

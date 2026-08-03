@@ -2,14 +2,16 @@
                      RESTAURANT RECEIPT                     
 ============================================================
 Receipt No    : 1001
-Customer      : Guest
+Customer      : John
+Phone         : 0312-34567890
 Order Type    : Dine-In (Table 5)
-Date & Time   : 2026-08-01 11:24:50
+Date & Time   : 2026-08-03 08:53:22
 ------------------------------------------------------------
 ID     Name                          Qty           Subtotal
 ------------------------------------------------------------
-121    Chicken Tikka                  5          Rs. 3000.00
+115    Beef Biryani                    2        Rs. 1000.00
+148    7up 350 ml                      2         Rs. 240.00
 ------------------------------------------------------------
-                    Total Payable: Rs. 2992.50
-                Payment Method: Mobile Payment
+                        Total Payable: Rs. 1302.00
+                       Payment Method: Card
 ============================================================
